@@ -1,4 +1,4 @@
-package ru.job4j.cars.ru.job4j.cars;
+package ru.job4j.cars;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

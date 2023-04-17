@@ -1,4 +1,4 @@
-package ru.job4j.cars.ru.job4j.cars;
+package ru.job4j.cars;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
