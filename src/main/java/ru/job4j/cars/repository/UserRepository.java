@@ -104,7 +104,8 @@ public class UserRepository {
      * @param login login.
      * @return Optional or user.
      */
-    public Optional<User> findByLogin(String login) {var session = sf.openSession();
+    public Optional<User> findByLogin(String login) {
+        var session = sf.openSession();
         return Optional.of(session.createQuery("FROM User user WHERE user.login = :login ", User.class)
                 .setParameter("login", login).uniqueResult());
     }
