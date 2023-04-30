@@ -22,7 +22,6 @@ public class UserRepository {
             session.beginTransaction();
             session.persist(user);
             session.getTransaction().commit();
-            user.setId((Integer) session.getIdentifier(Integer.class));
             return user;
         } catch (Exception e) {
             session.getTransaction().rollback();
@@ -60,7 +59,7 @@ public class UserRepository {
         try {
             session.beginTransaction();
             session.createQuery(
-                            "DELETE User WHERE id = :userId", User.class)
+                            "DELETE FROM User WHERE id = :userId", User.class)
                     .setParameter("userId", userId)
                     .executeUpdate();
             session.getTransaction().commit();
