@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.hibernate.SessionFactory;
 import ru.job4j.cars.model.User;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +26,8 @@ public class UserRepository {
             return user;
         } catch (Exception e) {
             session.getTransaction().rollback();
+        } finally {
+            sf.close();
         }
         return user;
     }
@@ -47,6 +50,8 @@ public class UserRepository {
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
+        } finally {
+            sf.close();
         }
     }
 
@@ -65,6 +70,8 @@ public class UserRepository {
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
+        } finally {
+            sf.close();
         }
     }
 
@@ -74,7 +81,17 @@ public class UserRepository {
      */
     public List<User> findAllOrderById() {
         var session = sf.openSession();
-        return session.createQuery("FROM User user ORDER BY user.id ASC", User.class).list();
+        try {
+            session.beginTransaction();
+            var users = session.createQuery("FROM User user ORDER BY user.id ASC", User.class).list();
+            session.getTransaction().commit();
+            return users;
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+        } finally {
+            sf.close();
+        }
+        return Collections.emptyList();
     }
 
     /**
@@ -83,8 +100,17 @@ public class UserRepository {
      */
     public Optional<User> findById(int userId) {
         var session = sf.openSession();
-        return Optional.of(session.createQuery("from User where id = :userId", User.class)
-                .setParameter("userId", userId).uniqueResult());
+        try {
+            var user = session.createQuery("from User where id = :userId", User.class)
+                    .setParameter("userId", userId).uniqueResultOptional();
+            session.getTransaction().commit();
+            return user;
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+        } finally {
+            sf.close();
+        }
+        return Optional.empty();
     }
 
     /**
@@ -94,9 +120,18 @@ public class UserRepository {
      */
     public List<User> findByLikeLogin(String key) {
         var session = sf.openSession();
-        return session.createQuery("FROM User user WHERE user.login LIKE :key ", User.class)
-                .setParameter("key", key)
-                .list();
+        try {
+            var users = session.createQuery("FROM User user WHERE user.login LIKE :key ", User.class)
+                    .setParameter("key", key)
+                    .list();
+            session.getTransaction().commit();
+            return users;
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+        } finally {
+            sf.close();
+        }
+        return Collections.emptyList();
     }
 
     /**
@@ -106,7 +141,16 @@ public class UserRepository {
      */
     public Optional<User> findByLogin(String login) {
         var session = sf.openSession();
-        return Optional.of(session.createQuery("FROM User user WHERE user.login = :login ", User.class)
-                .setParameter("login", login).uniqueResult());
+        try {
+            var user = session.createQuery("FROM User user WHERE user.login = :login ", User.class)
+                    .setParameter("login", login).uniqueResultOptional();
+            session.getTransaction().commit();
+            return user;
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+        } finally {
+            sf.close();
+        }
+        return Optional.empty();
     }
 }
