@@ -6,7 +6,6 @@ import lombok.EqualsAndHashCode;
 
 import java.math.BigInteger;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -24,8 +23,4 @@ public class PriceHistory {
     private BigInteger after;
 
     private LocalDateTime created;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "price_history_id")
-    private List<Post> posts;
 }
