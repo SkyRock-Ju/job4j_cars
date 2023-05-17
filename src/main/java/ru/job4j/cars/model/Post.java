@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,7 +20,7 @@ public class Post {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
-    private List<PriceHistory> priceHistories;
+    private List<PriceHistory> priceHistories = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
@@ -27,6 +28,6 @@ public class Post {
             joinColumns = { @JoinColumn(name = "post_id") },
             inverseJoinColumns = { @JoinColumn(name = "user_id") }
     )
-    private List<User> participates;
+    private List<User> participates = new ArrayList<>();
 
 }
