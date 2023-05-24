@@ -36,4 +36,8 @@ public class Post {
     @JoinColumn(name = "car_id", foreignKey = @ForeignKey(name = "CAR_ID_FK"))
     private Car car;
 
+    @ManyToOne
+    @JoinColumn(name = "file_id", foreignKey = @ForeignKey(name = "FILE_ID_FK"))
+    private File file;
+
 }
