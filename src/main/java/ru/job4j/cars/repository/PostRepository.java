@@ -42,11 +42,10 @@ public class PostRepository {
         );
     }
 
-    public List<Post> findPostsByName(String name) {
+    public List<Post> findPostsByCarName(String carName) {
         return crudRepository.query(
-                "FROM Post WHERE name LIKE :name",
-                Post.class,
-                Map.of("name", "%" + name + "%")
+                "FROM Post post JOIN post.car car WHERE car.name = :name", Post.class,
+                Map.of("name",  carName)
         );
     }
 

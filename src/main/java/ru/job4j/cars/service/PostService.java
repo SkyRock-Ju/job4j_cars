@@ -32,8 +32,8 @@ public class PostService {
         return postRepository.findPostsWithPhoto();
     }
 
-    public List<Post> findPostsByName(String name) {
-        return postRepository.findPostsByName(name);
+    public List<Post> findPostsByCarName(String name) {
+        return postRepository.findPostsByCarName(name);
     }
 
     public void save(Post post) {
