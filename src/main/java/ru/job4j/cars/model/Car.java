@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -33,4 +35,8 @@ public class Car {
             inverseJoinColumns = {
                     @JoinColumn(name = "owner_id", nullable = false, updatable = false)})
     private Set<Owner> owners = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "car_id")
+    private List<History> histories = new ArrayList<>();
 }
