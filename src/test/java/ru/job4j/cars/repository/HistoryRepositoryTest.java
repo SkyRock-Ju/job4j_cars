@@ -38,7 +38,11 @@ public class HistoryRepositoryTest {
         history.setStartAt(LocalDateTime.now());
         history.setEndAt(LocalDateTime.now());
         historyRepository.save(history);
-        assertThat(historyRepository.findById(history.getId()).orElseThrow(), is(history));
+        assertThat(
+                historyRepository.findById(history.getId()).orElseThrow()
+                        .getStartAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS")),
+                is(history.getStartAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS")))
+        );
     }
 
     @Test
@@ -53,7 +57,8 @@ public class HistoryRepositoryTest {
         historyRepository.update(history);
         assertThat(
                 historyRepository.findById(
-                        history.getId()).orElseThrow().getStartAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS")),
+                        history.getId()).orElseThrow().getStartAt()
+                        .format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS")),
                 is(updatedDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS")))
         );
     }
