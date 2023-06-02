@@ -6,7 +6,9 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "auto_posts")
@@ -32,12 +34,16 @@ public class Post {
     )
     private List<User> participates = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "car_id", foreignKey = @ForeignKey(name = "CAR_ID_FK"))
+    @OneToOne
+    @JoinColumn(name = "car_id")
     private Car car;
 
     @ManyToOne
-    @JoinColumn(name = "file_id", foreignKey = @ForeignKey(name = "FILE_ID_FK"))
-    private File file;
+    @JoinColumn(name = "auto_user_id")
+    private User user;
+
+    @OneToMany(cascade =  CascadeType.ALL)
+    @JoinColumn(name = "post_id")
+    private Set<File> files = new HashSet<>();
 
 }

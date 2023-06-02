@@ -15,6 +15,8 @@ public class History {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(name = "start_at")
     private LocalDateTime startAt;
+    @Column(name = "end_at")
     private LocalDateTime endAt;
 }

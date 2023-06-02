@@ -1,6 +1,7 @@
 create table files
 (
-    id   serial primary key,
-    name varchar not null,
-    path varchar not null unique
+    id   serial PRIMARY KEY,
+    name varchar NOT NULL,
+    path varchar NOT NULL UNIQUE,
+    post_id int NOT NULL REFERENCES auto_posts(id)
 );

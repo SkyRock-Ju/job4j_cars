@@ -15,12 +15,12 @@ public class CarRepository {
     private CrudRepository crudRepository;
 
     public List<Car> findAll() {
-        return crudRepository.query("FROM Car car JOIN FETCH car.owner", Car.class);
+        return crudRepository.query("FROM Car car LEFT JOIN FETCH car.owner", Car.class);
     }
 
     public Optional<Car> findById(int id) {
         return crudRepository.optional(
-                "FROM Car WHERE id = :id",
+                "FROM Car car LEFT JOIN FETCH car.owners WHERE car.id = :id ",
                 Car.class,
                 Map.of("id", id)
         );

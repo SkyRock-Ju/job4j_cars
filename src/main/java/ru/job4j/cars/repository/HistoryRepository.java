@@ -15,7 +15,7 @@ public class HistoryRepository {
     private CrudRepository crudRepository;
 
     public List<History> findAll() {
-        return crudRepository.query("FROM Owner", History.class);
+        return crudRepository.query("FROM History", History.class);
     }
 
     public Optional<History> findById(int id) {

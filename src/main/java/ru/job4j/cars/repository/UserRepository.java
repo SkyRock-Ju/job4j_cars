@@ -16,9 +16,8 @@ public class UserRepository {
      * @param user пользователь.
      * @return пользователь с id.
      */
-    public User create(User user) {
+    public void create(User user) {
         crudRepository.run(session -> session.persist(user));
-        return user;
     }
 
     /**
@@ -35,7 +34,7 @@ public class UserRepository {
      */
     public void delete(int userId) {
         crudRepository.run(
-                "delete from User where id = :fId",
+                "DELETE FROM User WHERE id = :fId",
                 Map.of("fId", userId)
         );
     }
@@ -45,7 +44,7 @@ public class UserRepository {
      * @return список пользователей.
      */
     public List<User> findAllOrderById() {
-        return crudRepository.query("from User order by id asc", User.class);
+        return crudRepository.query("FROM User ORDER BY id ASC", User.class);
     }
 
     /**
@@ -54,7 +53,7 @@ public class UserRepository {
      */
     public Optional<User> findById(int userId) {
         return crudRepository.optional(
-                "from User where id = :fId", User.class,
+                "FROM User WHERE id = :fId", User.class,
                 Map.of("fId", userId)
         );
     }
@@ -66,7 +65,7 @@ public class UserRepository {
      */
     public List<User> findByLikeLogin(String key) {
         return crudRepository.query(
-                "from User where login like :fKey", User.class,
+                "FROM User WHERE login LIKE :fKey", User.class,
                 Map.of("fKey", "%" + key + "%")
         );
     }
@@ -78,7 +77,7 @@ public class UserRepository {
      */
     public Optional<User> findByLogin(String login) {
         return crudRepository.optional(
-                "from User where login = :fLogin", User.class,
+                "FROM User WHERE login = :fLogin", User.class,
                 Map.of("fLogin", login)
         );
     }
